@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
     <!-- Font Import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -25,11 +25,42 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="./Style/style.css">
+    <link rel="stylesheet" href="./Style/style.css" />
 </head>
 
 <body>
-<h2 class="text-5xl">Welcome to My Website</h2>
+    <section class="container mx-auto h-screen flex items-center justify-center">
+        <div class="flex flex-col justify-between items-center border-[#292524] shadow-md shadow-[#00000014] p-10 rounded-lg gap-5">
+            <div class="logo w-20">
+                <img src="./assets/github-logo.png" alt="" />
+            </div>
+            <h2>GitHub Issues Tracker</h2>
+            <p>Sign in to manage your issues</p>
+            <div class="form w-full p-5">
+                <form id="loginForm" action="submit" class="space-y-10">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="input w-full" placeholder="Username" /><br>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="input w-full" placeholder="Password" />
+                    <button class="btn btn-primary mt-4 w-full">Login</button>
+                </form>
+            </div>
+            <div class="lines flex flex-row justify-between items-center w-full gap-5">
+                <div class="line w-full h-[1px] bg-black"></div>
+                <p>OR</p>
+                <div class="line w-full h-[1px] bg-black"></div>
+            </div>
+            <div class="credentials flex flex-col justify-between items-center gap-10">
+                <p>Demo Credentials:</p>
+                <div class="flex flex-col justify-between items-center gap-5 ">
+                    <p>Username: admin</p>
+                    <p>Password: admin123</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="./Script/index.js"></script>
 </body>
 
 </html>
