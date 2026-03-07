@@ -1,5 +1,11 @@
 const allIssueCount = document.getElementById("issue-count");
 const searchInput = document.getElementById("Search-Input");
+const openIssues = document.getElementById("Open-Issues");
+const openBtn = document.getElementById("open-btn");
+const alIssues = document.getElementById("All-Issues");
+const allBtn = document.getElementById("all-btn");
+const closedBtn = document.getElementById("closed-btn");
+const ClosedIssues = document.getElementById("Closed-Issues");
 
 const loadAllIssues = () => {
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues`;
@@ -104,7 +110,7 @@ displayOpenIssues = (issues) => {
     }
   });
 
-//   openIssuesContainer.classList.remove("hidden");
+  //   openIssuesContainer.classList.remove("hidden");
 };
 
 displayClosedIssues = (issues) => {
@@ -147,14 +153,14 @@ displayClosedIssues = (issues) => {
     }
   });
 
-//   closedIssuesContainer.classList.remove("hidden");
+  //   closedIssuesContainer.classList.remove("hidden");
 };
 
 const updateIssueCount = () => {
-    const allIssuesContainer = document.getElementById("All-Issues");
-    const openIssuesContainer = document.getElementById("Open-Issues");
-    const closedIssuesContainer = document.getElementById("Closed-Issues");
-    const allIssueCount = document.getElementById("issue-count");
+  const allIssuesContainer = document.getElementById("All-Issues");
+  const openIssuesContainer = document.getElementById("Open-Issues");
+  const closedIssuesContainer = document.getElementById("Closed-Issues");
+  const allIssueCount = document.getElementById("issue-count");
 
   if (!allIssuesContainer.classList.contains("hidden")) {
     allIssueCount.innerText = allIssuesContainer.children.length + " Issues";
@@ -181,12 +187,33 @@ searchInput.addEventListener("input", function (e) {
   });
 });
 
-const openIssues = document.getElementById("Open-Issues");
-const openBtn = document.getElementById("open-btn");
-const alIssues = document.getElementById("All-Issues");
-const allBtn = document.getElementById("all-btn");
-const closedBtn = document.getElementById("closed-btn");
-const ClosedIssues = document.getElementById("Closed-Issues");
+function setActiveButton(activeBtn, bgColor) {
+  const allBtn = document.getElementById("all-btn");
+  document.getElementById("all-btn").style.backgroundColor = "";
+  document.getElementById("all-btn").style.color = "";
+  document.getElementById("open-btn").style.backgroundColor = "";
+  document.getElementById("open-btn").style.color = "";
+  document.getElementById("closed-btn").style.backgroundColor = "";
+  document.getElementById("closed-btn").style.color = "";
+  activeBtn.style.backgroundColor = bgColor;
+  activeBtn.style.color = "#fff";
+
+  if (activeBtn !== allBtn) {
+    allBtn.style.backgroundColor = "transparent";
+    allBtn.style.color = "#000000";
+    allBtn.style.border = "1px solid #d6d6d6";
+  }
+}
+document.getElementById("all-btn").addEventListener("click", function () {
+  setActiveButton(this, "#4F39F6");
+});
+document.getElementById("open-btn").addEventListener("click", function () {
+  setActiveButton(this, "green");
+});
+document.getElementById("closed-btn").addEventListener("click", function () {
+  setActiveButton(this, "purple");
+});
+setActiveButton(document.getElementById("all-btn"), "#4F39F6");
 
 openBtn.addEventListener("click", () => {
   openIssues.classList.remove("hidden");
@@ -205,10 +232,10 @@ closedBtn.addEventListener("click", () => {
 
 allBtn.addEventListener("click", () => {
   alIssues.classList.remove("hidden");
-  openIssues.classList.add("hidden"); 
+  openIssues.classList.add("hidden");
   ClosedIssues.classList.add("hidden");
   console.log("All button clicked");
-  updateIssueCount();   
+  updateIssueCount();
 });
 
 loadAllIssues();
