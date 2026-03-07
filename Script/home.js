@@ -5,7 +5,11 @@ const loadAllIssues = () => {
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues`;
   fetch(url)
     .then((res) => res.json())
-    .then((data) => displayAllIssues(data.data));
+    .then((data) => {
+      displayAllIssues(data.data);
+      displayOpenIssues(data.data);
+      displayClosedIssues(data.data);
+    });
 };
 
 displayAllIssues = (issues) => {
@@ -31,14 +35,17 @@ displayAllIssues = (issues) => {
                 <p class="text-[12px] text-[#64748b]">${issue.description}</p>
             </div>
             <div class="flex justify-start items-left gap-5">
-                <div class="border border-[#fecaca] gap-2 w-40 bg-[#feecec] rounded-[100px] p-2" >
-                    <p class="text-center text-[12px] font-bold text-[#ef4444]"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</p>
-                </div>
-                <div class="border border-[#fde68a] gap-2 w-40 bg-[#fff8db] rounded-[100px] p-2" >
-                    <p class="text-center text-[12px] font-bold text-[#d97706]">${issue.labels[1] === undefined ? " " : `<i class="fa-solid fa-hands-helping"></i> ${issue.labels[1]}`}</p>
-                </div>
-                
+            <div class="border border-[#fecaca] gap-2 w-40 bg-[#feecec] rounded-[100px] p-2">
+              <p class="text-center text-[12px] font-bold text-[#ef4444]"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</p>
             </div>
+            ${
+              issue.labels[1]
+                ? `<div class="border border-[#fde68a] gap-2 w-40 bg-[#fff8db] rounded-[100px] p-2">
+                    <p class="text-center text-[12px] font-bold text-[#d97706]"><i class="fa-solid fa-hands-helping"></i> ${issue.labels[1]}</p>
+                  </div>`
+                : ""
+            }
+          </div>
             <!-- </div>
             <div class="w-full bg-black h-[1px]"></div> -->
 
@@ -54,6 +61,109 @@ displayAllIssues = (issues) => {
   });
 };
 
+displayOpenIssues = (issues) => {
+  const openIssuesContainer = document.getElementById("Open-Issues");
+  openIssuesContainer.innerHTML = ""; // clear previous cards
+
+  issues.forEach((issue) => {
+    // Trim spaces and convert to lowercase to avoid mismatches
+    if (issue.status && issue.status.trim().toLowerCase() === "open") {
+      const issueElement = document.createElement("div");
+      issueElement.classList.add("issue");
+      issueElement.innerHTML = `
+        <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-green-500">
+          <div class="flex justify-between items-center">
+            <img src="../assets/Open-Status.png" alt="">
+            <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
+          </div>
+          <div>
+            <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
+            <p class="text-[12px] text-[#64748b]">${issue.description}</p>
+          </div>
+          <div class="flex justify-start items-left gap-5">
+            <div class="border border-[#fecaca] gap-2 w-40 bg-[#feecec] rounded-[100px] p-2">
+              <p class="text-center text-[12px] font-bold text-[#ef4444]"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</p>
+            </div>
+            ${
+              issue.labels[1]
+                ? `<div class="border border-[#fde68a] gap-2 w-40 bg-[#fff8db] rounded-[100px] p-2">
+                    <p class="text-center text-[12px] font-bold text-[#d97706]"><i class="fa-solid fa-hands-helping"></i> ${issue.labels[1]}</p>
+                  </div>`
+                : ""
+            }
+          </div>
+          <div class="border-t-1 border-gray-100 bg-slate-50 rounded-lg px-4 gap-5 w-full flex flex-col justify-start items-start py-5">
+            <p class="text-[12px] text-[#64748b]">#${issue.id} by ${issue.author}</p>
+            <p class="text-[12px] text-[#64748b]">${new Date(issue.createdAt).toLocaleDateString()}</p>
+          </div>
+        </div>
+      `;
+      //   allIssueCount.innerText =
+      //   openIssuesContainer.children.length + 1 + " Issues";
+      openIssuesContainer.appendChild(issueElement);
+    }
+  });
+
+//   openIssuesContainer.classList.remove("hidden");
+};
+
+displayClosedIssues = (issues) => {
+  const closedIssuesContainer = document.getElementById("Closed-Issues");
+  closedIssuesContainer.innerHTML = ""; // clear previous cards
+
+  issues.forEach((issue) => {
+    if (issue.status && issue.status.trim().toLowerCase() === "closed") {
+      const issueElement = document.createElement("div");
+      issueElement.classList.add("issue");
+      issueElement.innerHTML = `
+        <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-purple-500">
+          <div class="flex justify-between items-center">
+            <img src="../assets/Status.png" alt="">
+            <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
+          </div>
+          <div>
+            <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
+            <p class="text-[12px] text-[#64748b]">${issue.description}</p>
+          </div>
+          <div class="flex justify-start items-left gap-5">
+            <div class="border border-[#fecaca] gap-2 w-40 bg-[#feecec] rounded-[100px] p-2">
+              <p class="text-center text-[12px] font-bold text-[#ef4444]"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</p>
+            </div>
+            ${
+              issue.labels[1]
+                ? `<div class="border border-[#fde68a] gap-2 w-40 bg-[#fff8db] rounded-[100px] p-2">
+                    <p class="text-center text-[12px] font-bold text-[#d97706]"><i class="fa-solid fa-hands-helping"></i> ${issue.labels[1]}</p>
+                  </div>`
+                : ""
+            }
+          </div>
+          <div class="border-t-1 border-gray-100 bg-slate-50 rounded-lg px-4 gap-5 w-full flex flex-col justify-start items-start py-5">
+            <p class="text-[12px] text-[#64748b]">#${issue.id} by ${issue.author}</p>
+            <p class="text-[12px] text-[#64748b]">${new Date(issue.createdAt).toLocaleDateString()}</p>
+          </div>
+        </div>
+      `;
+      closedIssuesContainer.appendChild(issueElement);
+    }
+  });
+
+//   closedIssuesContainer.classList.remove("hidden");
+};
+
+const updateIssueCount = () => {
+    const allIssuesContainer = document.getElementById("All-Issues");
+    const openIssuesContainer = document.getElementById("Open-Issues");
+    const closedIssuesContainer = document.getElementById("Closed-Issues");
+    const allIssueCount = document.getElementById("issue-count");
+
+  if (!allIssuesContainer.classList.contains("hidden")) {
+    allIssueCount.innerText = allIssuesContainer.children.length + " Issues";
+  } else if (!openIssuesContainer.classList.contains("hidden")) {
+    allIssueCount.innerText = openIssuesContainer.children.length + " Issues";
+  } else if (!closedIssuesContainer.classList.contains("hidden")) {
+    allIssueCount.innerText = closedIssuesContainer.children.length + " Issues";
+  }
+};
 
 searchInput.addEventListener("input", function (e) {
   const searchText = e.target.value.toLowerCase();
@@ -79,24 +189,26 @@ const closedBtn = document.getElementById("closed-btn");
 const ClosedIssues = document.getElementById("Closed-Issues");
 
 openBtn.addEventListener("click", () => {
-  openIssues.classList.remove("hidden"); // Show open
+  openIssues.classList.remove("hidden");
   alIssues.classList.add("hidden");
   ClosedIssues.classList.add("hidden");
-
   console.log("Open button clicked");
+  updateIssueCount();
 });
 closedBtn.addEventListener("click", () => {
   ClosedIssues.classList.remove("hidden");
   alIssues.classList.add("hidden");
   openIssues.classList.add("hidden");
   console.log("Closed button clicked");
+  updateIssueCount();
 });
 
 allBtn.addEventListener("click", () => {
   alIssues.classList.remove("hidden");
-  openIssues.classList.add("hidden"); // Show all
+  openIssues.classList.add("hidden"); 
   ClosedIssues.classList.add("hidden");
   console.log("All button clicked");
+  updateIssueCount();   
 });
 
 loadAllIssues();
