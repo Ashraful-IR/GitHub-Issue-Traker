@@ -208,10 +208,10 @@ document.getElementById("all-btn").addEventListener("click", function () {
   setActiveButton(this, "#4F39F6");
 });
 document.getElementById("open-btn").addEventListener("click", function () {
-  setActiveButton(this, "green");
+  setActiveButton(this, "#00a96e");
 });
 document.getElementById("closed-btn").addEventListener("click", function () {
-  setActiveButton(this, "purple");
+  setActiveButton(this, "#a855f7");
 });
 setActiveButton(document.getElementById("all-btn"), "#4F39F6");
 
