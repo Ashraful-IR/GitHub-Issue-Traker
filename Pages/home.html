@@ -93,19 +93,25 @@
       </div>
     </div>
   </section>
-  
+
   <!-- Open the modal using ID.showModal() method -->
   <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+
     <div class="modal-box">
-      <h3 class="text-lg font-bold">Hello!</h3>
-      <p class="py-4">Press ESC key or click the button below to close</p>
+
+      <div id="details-container" class="details-container flex flex-col justify-start items-start rounded-[12px] gap-[24px] p-5 w-full">
+
+      </div>
+
       <div class="modal-action">
         <form method="dialog">
           <!-- if there is a button in form, it will close the modal -->
-          <button class="btn">Close</button>
+          <button class="btn btn-primary">Close</button>
         </form>
       </div>
+
     </div>
+
   </dialog>
 
   <section id="spinner"
