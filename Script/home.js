@@ -49,7 +49,7 @@ displayAllIssues = (issues) => {
     const issueElement = document.createElement("div");
     issueElement.classList.add("issue");
     issueElement.innerHTML = `
-            <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col ${borderColor}">
+            <div onclick="my_modal_5.showModal()" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col ${borderColor}">
             <div class="flex justify-between items-center">
             ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
             ${issue.status === "open" ? `<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>` : ""}
@@ -98,7 +98,7 @@ displayOpenIssues = (issues) => {
       const issueElement = document.createElement("div");
       issueElement.classList.add("issue");
       issueElement.innerHTML = `
-        <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-green-500">
+        <div onclick="my_modal_5.showModal()" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-green-500">
           <div class="flex justify-between items-center">
             <img src="../assets/Open-Status.png" alt="">
             <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
@@ -144,7 +144,7 @@ displayClosedIssues = (issues) => {
       const issueElement = document.createElement("div");
       issueElement.classList.add("issue");
       issueElement.innerHTML = `
-        <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-purple-500">
+        <div onclick="my_modal_5.showModal()" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-purple-500">
           <div class="flex justify-between items-center">
             <img src="../assets/Status.png" alt="">
             <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
