@@ -7,7 +7,27 @@ const allBtn = document.getElementById("all-btn");
 const closedBtn = document.getElementById("closed-btn");
 const ClosedIssues = document.getElementById("Closed-Issues");
 
+const displaySpinner = (status) => {
+  const spinner = document.getElementById("spinner");
+  const alIssues = document.getElementById("All-Issues");
+  const openIssues = document.getElementById("Open-Issues");
+  const closedIssues = document.getElementById("Closed-Issues");
+  if (status === true) {
+    spinner.classList.remove("hidden");
+    alIssues.classList.add("hidden");
+    openIssues.classList.add("hidden");
+    closedIssues.classList.add("hidden");
+  } else {
+    
+    alIssues.classList.remove("hidden");
+    spinner.classList.add("hidden");
+    openIssues.classList.add("hidden");
+    closedIssues.classList.add("hidden");
+  }
+};
+
 const loadAllIssues = () => {
+  displaySpinner(true);
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues`;
   fetch(url)
     .then((res) => res.json())
@@ -65,6 +85,7 @@ displayAllIssues = (issues) => {
       allIssuesContainer.children.length + 1 + " Issues";
     allIssuesContainer.appendChild(issueElement);
   });
+  displaySpinner(false);
 };
 
 displayOpenIssues = (issues) => {
@@ -109,6 +130,7 @@ displayOpenIssues = (issues) => {
       openIssuesContainer.appendChild(issueElement);
     }
   });
+  displaySpinner(false);
 
   //   openIssuesContainer.classList.remove("hidden");
 };
@@ -152,6 +174,7 @@ displayClosedIssues = (issues) => {
       closedIssuesContainer.appendChild(issueElement);
     }
   });
+  displaySpinner(false);
 
   //   closedIssuesContainer.classList.remove("hidden");
 };

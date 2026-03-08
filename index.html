@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitHub Issues Tracker</title>
@@ -10,59 +9,107 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&  display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&  display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <!-- Deisy UI -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <link rel="stylesheet" href="./Style/style.css" />
-</head>
+  </head>
 
-<body>
-    <section class="container mx-auto w-11/12 h-screen flex items-center justify-center">
-        <div
-            class="flex flex-col justify-between items-center border-[#292524] shadow-lg shadow-[#00000014] p-10 rounded-lg gap-5">
-            <div class="logo w-20">
-                <img src="./assets/github-logo.png" alt="" />
-            </div>
-            <h2 class="text-[24px] font-semibold text-[#1f2937]">GitHub Issues Tracker</h2>
-            <p class="text-[16px] text-[#64748b]">Sign in to manage your issues</p>
-            <div class="form w-full p-5">
-                <form id="loginForm" action="submit" class="space-y-5">
-                    <label for="username" class="text-[16px] font-medium text-[#1f2937]">Username</label>
-                    <input type="text" id="username" class="input w-full" placeholder="Enter Username" /><br>
-                    <label for="password" class="text-[16px] font-medium text-[#1f2937]">Password</label>
-                    <input type="password" id="password" class="input w-full" placeholder="Enter Password" />
-                    <button class="btn btn-primary mt-4 w-full text-[16px] font-semibold text-[#ffffff]">Sign
-                        In</button>
-                </form>
-            </div>
-            <div class="lines flex flex-row justify-between items-center w-full gap-5">
-                <div class="line w-full h-[1px] bg-[#e4e4e7] "></div>
-                <p>OR</p>
-                <div class="line w-full h-[1px] bg-[#e4e4e7] "></div>
-            </div>
-            <div class="credentials flex flex-col justify-between items-center gap-5 w-full">
-                <p>Demo Credentials:</p>
-                <div class="flex flex-col justify-between items-center gap-2 rounded-[8px] bg-[#f8fafc] p-4 w-full">
-                    <p><span class="text-[16px] font-bold text-[#1f2937]">Username:</span> admin</p>
-                    <p><span class="text-[16px] font-bold text-[#1f2937]">Password:</span> admin123</p>
-                </div>
-            </div>
+  <body>
+    <section
+      class="container mx-auto w-11/12 h-screen flex items-center justify-center"
+    >
+      
+
+      <div
+        class="flex flex-col justify-between items-center border-[#292524] shadow-lg shadow-[#00000014] p-10 rounded-lg gap-5"
+      >
+        <div class="logo w-20">
+          <img src="./assets/github-logo.png" alt="" />
         </div>
+        <h2 class="text-[24px] font-semibold text-[#1f2937]">
+          GitHub Issues Tracker
+        </h2>
+        <p class="text-[16px] text-[#64748b]">Sign in to manage your issues</p>
+        <div class="form w-full p-5">
+          <form id="loginForm" action="submit" class="space-y-5">
+            <label for="username" class="text-[16px] font-medium text-[#1f2937]"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="username"
+              class="input w-full"
+              placeholder="Enter Username"
+            /><br />
+            <label for="password" class="text-[16px] font-medium text-[#1f2937]"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              class="input w-full"
+              placeholder="Enter Password"
+            />
+            <button
+              class="btn btn-primary mt-4 w-full text-[16px] font-semibold text-[#ffffff]"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
+        <div
+          class="lines flex flex-row justify-between items-center w-full gap-5"
+        >
+          <div class="line w-full h-[1px] bg-[#e4e4e7]"></div>
+          <p>OR</p>
+          <div class="line w-full h-[1px] bg-[#e4e4e7]"></div>
+        </div>
+        <div
+          class="credentials flex flex-col justify-between items-center gap-5 w-full"
+        >
+          <p>Demo Credentials:</p>
+          <div
+            class="flex flex-col justify-between items-center gap-2 rounded-[8px] bg-[#f8fafc] p-4 w-full"
+          >
+            <p>
+              <span class="text-[16px] font-bold text-[#1f2937]"
+                >Username:</span
+              >
+              admin
+            </p>
+            <p>
+              <span class="text-[16px] font-bold text-[#1f2937]"
+                >Password:</span
+              >
+              admin123
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <script src="./Script/index.js"></script>
-</body>
-
+  </body>
 </html>
