@@ -57,7 +57,7 @@ displayAllIssues = (issues) => {
 
             <div class=" border-t-1 border-gray-100 bg-slate-50 rounded-lg px-4 gap-5 w-full flex flex-col justify-start items-start py-5">
                 <p class="text-[12px] text-[#64748b]">#${issue.id} by ${issue.author}</p>
-                <p class="text-[12px] text-[#64748b]">${issue.createdAt}</p>
+                <p class="text-[12px] text-[#64748b]">${new Date(issue.createdAt).toLocaleDateString()}</p>
             </div>
         </div>
         `;
@@ -162,13 +162,18 @@ const updateIssueCount = () => {
   const closedIssuesContainer = document.getElementById("Closed-Issues");
   const allIssueCount = document.getElementById("issue-count");
 
+  let visibleIssueCount = [];
   if (!allIssuesContainer.classList.contains("hidden")) {
-    allIssueCount.innerText = allIssuesContainer.children.length + " Issues";
+    visibleIssueCount = [...allIssuesContainer.children].filter(
+      issue => issue.offsetParent !== null);
   } else if (!openIssuesContainer.classList.contains("hidden")) {
-    allIssueCount.innerText = openIssuesContainer.children.length + " Issues";
+    visibleIssueCount = [...openIssuesContainer.children].filter(
+      issue => issue.offsetParent !== null);
   } else if (!closedIssuesContainer.classList.contains("hidden")) {
-    allIssueCount.innerText = closedIssuesContainer.children.length + " Issues";
+    visibleIssueCount = [...closedIssuesContainer.children].filter(
+      issue => issue.offsetParent !== null);
   }
+  allIssueCount.innerText = visibleIssueCount.length + " Issues";
 };
 
 searchInput.addEventListener("input", function (e) {
@@ -185,6 +190,7 @@ searchInput.addEventListener("input", function (e) {
       issue.style.display = "none";
     }
   });
+  updateIssueCount();
 });
 
 function setActiveButton(activeBtn, bgColor) {
