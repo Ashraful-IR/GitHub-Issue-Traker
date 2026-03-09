@@ -7,27 +7,6 @@ const allBtn = document.getElementById("all-btn");
 const closedBtn = document.getElementById("closed-btn");
 const ClosedIssues = document.getElementById("Closed-Issues");
 
-<<<<<<< HEAD
-const displaySpinner = (status) => {
-  const spinner = document.getElementById("spinner");
-  const alIssues = document.getElementById("All-Issues");
-  const openIssues = document.getElementById("Open-Issues");
-  const closedIssues = document.getElementById("Closed-Issues");
-  if (status === true) {
-    spinner.classList.remove("hidden");
-    alIssues.classList.add("hidden");
-    openIssues.classList.add("hidden");
-    closedIssues.classList.add("hidden");
-  } else {
-    alIssues.classList.remove("hidden");
-    spinner.classList.add("hidden");
-    openIssues.classList.add("hidden");
-    closedIssues.classList.add("hidden");
-  }
-};
-
-=======
->>>>>>> 2f3ad3c54ac0580acca916fee092f09252432392
 const loadAllIssues = () => {
   displaySpinner(true);
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues`;
