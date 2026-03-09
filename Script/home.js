@@ -18,7 +18,6 @@ const displaySpinner = (status) => {
     openIssues.classList.add("hidden");
     closedIssues.classList.add("hidden");
   } else {
-    
     alIssues.classList.remove("hidden");
     spinner.classList.add("hidden");
     openIssues.classList.add("hidden");
