@@ -7,6 +7,7 @@ const allBtn = document.getElementById("all-btn");
 const closedBtn = document.getElementById("closed-btn");
 const ClosedIssues = document.getElementById("Closed-Issues");
 
+<<<<<<< HEAD
 const displaySpinner = (status) => {
   const spinner = document.getElementById("spinner");
   const alIssues = document.getElementById("All-Issues");
@@ -25,6 +26,8 @@ const displaySpinner = (status) => {
   }
 };
 
+=======
+>>>>>>> 2f3ad3c54ac0580acca916fee092f09252432392
 const loadAllIssues = () => {
   displaySpinner(true);
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues`;
@@ -35,6 +38,109 @@ const loadAllIssues = () => {
       displayOpenIssues(data.data);
       displayClosedIssues(data.data);
     });
+};
+
+const showIssuesDetails = (id) => {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      displayModalDetails(data.data);
+    });
+};
+
+const displaySpinner = (status) => {
+  const spinner = document.getElementById("spinner");
+  const alIssues = document.getElementById("All-Issues");
+  const openIssues = document.getElementById("Open-Issues");
+  const closedIssues = document.getElementById("Closed-Issues");
+  if (status === true) {
+    spinner.classList.remove("hidden");
+    alIssues.classList.add("hidden");
+    openIssues.classList.add("hidden");
+    closedIssues.classList.add("hidden");
+  } else {
+    alIssues.classList.remove("hidden");
+    spinner.classList.add("hidden");
+    openIssues.classList.add("hidden");
+    closedIssues.classList.add("hidden");
+  }
+};
+
+displayModalDetails = (issues) => {
+  document.getElementById("my_modal_5").showModal();
+  const modalDetailsContainer = document.getElementById("details-container");
+  modalDetailsContainer.innerHTML = ` 
+
+        <div>
+          <p class="text-[24px] font-bold text-[#1f2937]">
+            ${issues.title}
+          </p>
+        </div>
+
+        <div class="flex justify-start items-left gap-5">
+          ${issues.status === "open" ? '<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">Open</span>' : issues.status === "closed" ? '<span class="text-[16px] text-[#16a34a] font-medium bg-green-100 w-20 text-center rounded-full">Closed</span>' : ""}
+          <p class="text-[12px] text-[#64748b]">Opened by ${issues.assignee}</p>
+          <p class="text-[12px] text-[#64748b]">${new Date(issues.createdAt).toLocaleDateString()}</p>
+        </div>
+
+        <div class="flex justify-start items-left gap-5">
+          <div class="border border-[#fecaca] gap-2 w-40 bg-[#feecec] rounded-[100px] p-2">
+              <p class="text-center text-[12px] font-bold text-[#ef4444]"><i class="fa-solid fa-bug"></i>${issues.labels[0]}</p>
+            </div>
+            ${
+              issues.labels[1]
+                ? `<div class="border border-[#fde68a] gap-2 w-40 bg-[#fff8db] rounded-[100px] p-2">
+                    <p class="text-center text-[12px] font-bold text-[#d97706]"><i class="fa-solid fa-hands-helping"></i> ${issues.labels[1]}</p>
+                  </div>`
+                : ""
+            }
+        </div>
+
+        <div>
+          <p class="text-[16px] text-[#64748b]">
+            ${issues.description}
+          </p>
+        </div>
+
+        <div class="flex justify-between items-center gap-5 bg-[#f8fafc] rounded-md w-full p-5">
+              <div class="flex flex-col justify-between items-start gap-4">
+                <p class="text-[16px] text-[#64748b]">Assignee</p>
+                <p class="text-[16px] font-semibold text-[#030303]">${issues.assignee}</p>
+              </div>
+
+              <div class="flex flex-col justify-between items-start gap-4">
+                <p class="text-[16px] text-[#64748b]">Priority</p>
+                <div class="flex justify-between items-center">
+                    ${
+                      issues.status === "open"
+                        ? issues.priority === "high"
+                          ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                          : issues.priority === "low"
+                            ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                            : issues.priority === "medium"
+                              ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issues.priority}</span>`
+                              : ""
+                        : ""
+                    }
+                      
+                      ${
+                        issues.status === "closed"
+                          ? issues.priority === "high"
+                            ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                            : issues.priority === "low"
+                              ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                              : issues.priority === "medium"
+                                ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issues.priority}</span>`
+                                : ""
+                          : ""
+                      }
+                  </div>
+              </div>
+          
+        </div>
+
+  `;
 };
 
 displayAllIssues = (issues) => {
@@ -48,12 +154,36 @@ displayAllIssues = (issues) => {
     const issueElement = document.createElement("div");
     issueElement.classList.add("issue");
     issueElement.innerHTML = `
-            <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col ${borderColor}">
+            <div onclick="showIssuesDetails(${issue.id})" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col ${borderColor}">
             <div class="flex justify-between items-center">
             ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
-            ${issue.status === "open" ? `<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>` : ""}
+
+           ${
+             issue.status === "open"
+               ? issue.priority === "high"
+                 ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                 : issue.priority === "low"
+                   ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                   : issue.priority === "medium"
+                     ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                     : ""
+               : ""
+           }
+
+
             ${issue.status === "closed" ? '<img src="../assets/Status.png" alt="">' : ""}
-            ${issue.status === "closed" ? `<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>` : ""}
+            
+            ${
+              issue.status === "closed"
+                ? issue.priority === "high"
+                  ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                  : issue.priority === "low"
+                    ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                    : issue.priority === "medium"
+                      ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                      : ""
+                : ""
+            }
             </div>
             <div>
                 <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
@@ -76,7 +206,7 @@ displayAllIssues = (issues) => {
 
             <div class=" border-t-1 border-gray-100 bg-slate-50 rounded-lg px-4 gap-5 w-full flex flex-col justify-start items-start py-5">
                 <p class="text-[12px] text-[#64748b]">#${issue.id} by ${issue.author}</p>
-                <p class="text-[12px] text-[#64748b]">${issue.createdAt}</p>
+                <p class="text-[12px] text-[#64748b]">${new Date(issue.createdAt).toLocaleDateString()}</p>
             </div>
         </div>
         `;
@@ -97,10 +227,36 @@ displayOpenIssues = (issues) => {
       const issueElement = document.createElement("div");
       issueElement.classList.add("issue");
       issueElement.innerHTML = `
-        <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-green-500">
+        <div onclick="showIssuesDetails(${issue.id})" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-green-500">
           <div class="flex justify-between items-center">
-            <img src="../assets/Open-Status.png" alt="">
-            <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
+            ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
+
+           ${
+             issue.status === "open"
+               ? issue.priority === "high"
+                 ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                 : issue.priority === "low"
+                   ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                   : issue.priority === "medium"
+                     ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                     : ""
+               : ""
+           }
+
+
+            ${issue.status === "closed" ? '<img src="../assets/Status.png" alt="">' : ""}
+            
+            ${
+              issue.status === "closed"
+                ? issue.priority === "high"
+                  ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                  : issue.priority === "low"
+                    ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                    : issue.priority === "medium"
+                      ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                      : ""
+                : ""
+            }
           </div>
           <div>
             <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
@@ -143,10 +299,36 @@ displayClosedIssues = (issues) => {
       const issueElement = document.createElement("div");
       issueElement.classList.add("issue");
       issueElement.innerHTML = `
-        <div class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-purple-500">
+        <div onclick="showIssuesDetails(${issue.id})" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-purple-500">
           <div class="flex justify-between items-center">
-            <img src="../assets/Status.png" alt="">
-            <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
+            ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
+
+           ${
+             issue.status === "open"
+               ? issue.priority === "high"
+                 ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                 : issue.priority === "low"
+                   ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                   : issue.priority === "medium"
+                     ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                     : ""
+               : ""
+           }
+
+
+            ${issue.status === "closed" ? '<img src="../assets/Status.png" alt="">' : ""}
+            
+            ${
+              issue.status === "closed"
+                ? issue.priority === "high"
+                  ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                  : issue.priority === "low"
+                    ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                    : issue.priority === "medium"
+                      ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                      : ""
+                : ""
+            }
           </div>
           <div>
             <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
@@ -184,13 +366,21 @@ const updateIssueCount = () => {
   const closedIssuesContainer = document.getElementById("Closed-Issues");
   const allIssueCount = document.getElementById("issue-count");
 
+  let visibleIssueCount = [];
   if (!allIssuesContainer.classList.contains("hidden")) {
-    allIssueCount.innerText = allIssuesContainer.children.length + " Issues";
+    visibleIssueCount = [...allIssuesContainer.children].filter(
+      (issue) => issue.offsetParent !== null,
+    );
   } else if (!openIssuesContainer.classList.contains("hidden")) {
-    allIssueCount.innerText = openIssuesContainer.children.length + " Issues";
+    visibleIssueCount = [...openIssuesContainer.children].filter(
+      (issue) => issue.offsetParent !== null,
+    );
   } else if (!closedIssuesContainer.classList.contains("hidden")) {
-    allIssueCount.innerText = closedIssuesContainer.children.length + " Issues";
+    visibleIssueCount = [...closedIssuesContainer.children].filter(
+      (issue) => issue.offsetParent !== null,
+    );
   }
+  allIssueCount.innerText = visibleIssueCount.length + " Issues";
 };
 
 searchInput.addEventListener("input", function (e) {
@@ -207,6 +397,7 @@ searchInput.addEventListener("input", function (e) {
       issue.style.display = "none";
     }
   });
+  updateIssueCount();
 });
 
 function setActiveButton(activeBtn, bgColor) {
