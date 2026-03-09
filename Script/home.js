@@ -49,7 +49,7 @@ const displaySpinner = (status) => {
 displayModalDetails = (issues) => {
   document.getElementById("my_modal_5").showModal();
   const modalDetailsContainer = document.getElementById("details-container");
-  modalDetailsContainer.innerHTML =` 
+  modalDetailsContainer.innerHTML = ` 
 
         <div>
           <p class="text-[24px] font-bold text-[#1f2937]">
@@ -58,7 +58,7 @@ displayModalDetails = (issues) => {
         </div>
 
         <div class="flex justify-start items-left gap-5">
-          <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issues.status}</span>
+          ${issues.status === "open" ? '<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">Open</span>' : issues.status === "closed" ? '<span class="text-[16px] text-[#16a34a] font-medium bg-green-100 w-20 text-center rounded-full">Closed</span>' : ""}
           <p class="text-[12px] text-[#64748b]">Opened by ${issues.assignee}</p>
           <p class="text-[12px] text-[#64748b]">${new Date(issues.createdAt).toLocaleDateString()}</p>
         </div>
@@ -90,15 +90,36 @@ displayModalDetails = (issues) => {
 
               <div class="flex flex-col justify-between items-start gap-4">
                 <p class="text-[16px] text-[#64748b]">Priority</p>
-                <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issues.priority}</span>
+                <div class="flex justify-between items-center">
+                    ${
+                      issues.status === "open"
+                        ? issues.priority === "high"
+                          ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                          : issues.priority === "low"
+                            ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                            : issues.priority === "medium"
+                              ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issues.priority}</span>`
+                              : ""
+                        : ""
+                    }
+                      
+                      ${
+                        issues.status === "closed"
+                          ? issues.priority === "high"
+                            ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                            : issues.priority === "low"
+                              ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issues.priority}</span>`
+                              : issues.priority === "medium"
+                                ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issues.priority}</span>`
+                                : ""
+                          : ""
+                      }
+                  </div>
               </div>
           
         </div>
 
   `;
-
-  
-  
 };
 
 displayAllIssues = (issues) => {
@@ -115,9 +136,33 @@ displayAllIssues = (issues) => {
             <div onclick="showIssuesDetails(${issue.id})" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col ${borderColor}">
             <div class="flex justify-between items-center">
             ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
-            ${issue.status === "open" ? `<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>` : ""}
+
+           ${
+             issue.status === "open"
+               ? issue.priority === "high"
+                 ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                 : issue.priority === "low"
+                   ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                   : issue.priority === "medium"
+                     ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                     : ""
+               : ""
+           }
+
+
             ${issue.status === "closed" ? '<img src="../assets/Status.png" alt="">' : ""}
-            ${issue.status === "closed" ? `<span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>` : ""}
+            
+            ${
+              issue.status === "closed"
+                ? issue.priority === "high"
+                  ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                  : issue.priority === "low"
+                    ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                    : issue.priority === "medium"
+                      ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                      : ""
+                : ""
+            }
             </div>
             <div>
                 <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
@@ -163,8 +208,34 @@ displayOpenIssues = (issues) => {
       issueElement.innerHTML = `
         <div onclick="showIssuesDetails(${issue.id})" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-green-500">
           <div class="flex justify-between items-center">
-            <img src="../assets/Open-Status.png" alt="">
-            <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
+            ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
+
+           ${
+             issue.status === "open"
+               ? issue.priority === "high"
+                 ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                 : issue.priority === "low"
+                   ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                   : issue.priority === "medium"
+                     ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                     : ""
+               : ""
+           }
+
+
+            ${issue.status === "closed" ? '<img src="../assets/Status.png" alt="">' : ""}
+            
+            ${
+              issue.status === "closed"
+                ? issue.priority === "high"
+                  ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                  : issue.priority === "low"
+                    ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                    : issue.priority === "medium"
+                      ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                      : ""
+                : ""
+            }
           </div>
           <div>
             <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
@@ -209,8 +280,34 @@ displayClosedIssues = (issues) => {
       issueElement.innerHTML = `
         <div onclick="showIssuesDetails(${issue.id})" class="bg-white w-full rounded-lg p-5 gap-3 flex flex-col border-t-4 border-purple-500">
           <div class="flex justify-between items-center">
-            <img src="../assets/Status.png" alt="">
-            <span class="text-[16px] text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>
+            ${issue.status === "open" ? '<img src="../assets/Open-Status.png" alt="">' : ""}
+
+           ${
+             issue.status === "open"
+               ? issue.priority === "high"
+                 ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                 : issue.priority === "low"
+                   ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                   : issue.priority === "medium"
+                     ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                     : ""
+               : ""
+           }
+
+
+            ${issue.status === "closed" ? '<img src="../assets/Status.png" alt="">' : ""}
+            
+            ${
+              issue.status === "closed"
+                ? issue.priority === "high"
+                  ? `<span class="text-[16px] border border-red-300 text-[#fa0f36] font-medium bg-red-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                  : issue.priority === "low"
+                    ? `<span class="text-[16px] border border-gray-300 text-[#444344] font-medium bg-gray-100 w-20 text-center rounded-full">${issue.priority}</span>`
+                    : issue.priority === "medium"
+                      ? `<span class="text-[16px] border border-[#c49d04] text-[#444344] font-medium bg-[#e7ce67] w-20 text-center rounded-full">${issue.priority}</span>`
+                      : ""
+                : ""
+            }
           </div>
           <div>
             <p class="text-[14px] font-semibold text-[#1f2937]">${issue.title}</p>
